@@ -10,3 +10,6 @@ server_socket.bind((server_ip, server_port))
 # Escuchar conexiones entrantes
 server_socket.listen(1)
 print("Esperando conexiones entrantes...")
+# Aceptar una conexión entrante
+client_socket, client_address = server_socket.accept()
+print(f"Conexión establecida desde {client_address}")
