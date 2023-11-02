@@ -7,3 +7,6 @@ server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Enlazar el socket a la dirección IP y puerto
 server_socket.bind((server_ip, server_port))
+# Escuchar conexiones entrantes
+server_socket.listen(1)
+print("Esperando conexiones entrantes...")
