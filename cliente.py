@@ -16,3 +16,7 @@ while True:
     # Recibir mensaje del servidor
     response = client_socket.recv(1024).decode()
     print(f"Servidor: {response}")
+    if message.lower() == "adiós":
+        print("Conexión terminada.")
+        client_socket.close()
+        break
