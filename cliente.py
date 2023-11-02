@@ -8,3 +8,8 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Conectar al servidor
 client_socket.connect((server_ip, server_port))
+
+while True:
+     # Enviar un mensaje al servidor
+    message = input("Tú: ")
+    client_socket.send(message.encode())
