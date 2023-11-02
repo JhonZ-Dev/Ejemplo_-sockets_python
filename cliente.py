@@ -13,3 +13,6 @@ while True:
      # Enviar un mensaje al servidor
     message = input("Tú: ")
     client_socket.send(message.encode())
+    # Recibir mensaje del servidor
+    response = client_socket.recv(1024).decode()
+    print(f"Servidor: {response}")
