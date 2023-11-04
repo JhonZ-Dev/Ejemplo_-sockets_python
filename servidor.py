@@ -1,28 +1,30 @@
 import socket
-# Configuración del servidor
-server_ip = "127.0.0.1"
-server_port = 12345
-# Crear un socket del servidor
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Enlazar el socket a la dirección IP y puerto
-server_socket.bind((server_ip, server_port))
-# Escuchar conexiones entrantes
-server_socket.listen(1)
-print("Esperando conexiones entrantes...")
-# Aceptar una conexión entrante
-client_socket, client_address = server_socket.accept()
-print(f"Conexión establecida desde {client_address}")
-while True:
-    # Recibir mensaje del cliente
-    message = client_socket.recv(1024).decode()
-    print(f"Cliente: {message}")
+def run_client():
+    server_ip = "127.0.0.1"
+    server_port = 12345
 
-    # Enviar respuesta al cliente
-    response = input("Tú: ")
-    client_socket.send(response.encode())
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    if response.lower() == "adiós":
-        print("Conexión terminada.")
+    try:
+        client_socket.connect((server_ip, server_port))
+        while True:
+            message = input("Tú: ")
+            client_socket.send(message.encode())
+
+            if message.lower() == "adiós":
+                print("Conexión terminada.")
+                client_socket.close()
+                break
+
+            response = client_socket.recv(1024).decode()
+            print(f"Servidor: {response}")
+
+    except ConnectionRefusedError:
+        print("No se pudo establecer conexión. Asegúrate de que el servidor esté en ejecución.")
+    except Exception as e:
+        print(f"Error: {e}")
         client_socket.close()
-        break
+
+if __name__ == "__main__":
+    run_client()
